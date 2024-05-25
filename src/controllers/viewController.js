@@ -42,9 +42,12 @@ const renderCartPage = async (req, res) => {
   try {
     const { cid } = req.params;
     const cart = await Cart.findById(cid).populate("products.productId");
+    if (!cart) {
+      return res.status(404).render("error", { message: "Cart not found" });
+    }
     res.render("cart", {
       title: "Cart",
-      cart,
+      cart: cart.toObject(), // Asegúrate de pasar un objeto puro a la vista
     });
   } catch (error) {
     res.status(500).json({ status: "error", message: error.message });

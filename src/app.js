@@ -12,10 +12,12 @@ connectMongoDB();
 const hbs = create({
   extname: "hbs",
   defaultLayout: "main",
+  partialsDir: ["src/views/partials"],
 });
 
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
+app.set("views", "./src/views");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
